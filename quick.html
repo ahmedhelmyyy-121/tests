@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اختبار تحليل الشخصية</title>
+<meta property="og:title" content="اختبار تحليل الشخصية (5 أسئلة)">
+<meta property="og:description" content="اعرف حقيقة شخصيتك بعد تحليل إجاباتك">
+<style>
+:root{--bg:#0f1226;--card:#1a1f3d;--card2:#232954;--tx:#f2f4ff;--mut:#9aa3d1;--ac:#7c8cff;--ac2:#5eead4;--bad:#fb7185}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;line-height:1.7}
+body{min-height:100vh;min-height:100dvh;padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+.wrap{max-width:560px;margin:0 auto}
+.card{background:var(--card);border-radius:20px;padding:22px;margin-top:14px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+h1{font-size:25px;margin:6px 0;text-align:center;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+p{color:var(--mut);margin:6px 0}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:17px;font-weight:700;color:#0b1020;background:linear-gradient(90deg,var(--ac),var(--ac2));margin-top:14px;cursor:pointer;font-family:inherit}
+.btn.sec{background:var(--card2);color:var(--tx)}
+.opt{display:block;width:100%;text-align:right;background:var(--card2);color:var(--tx);border:2px solid transparent;border-radius:14px;padding:13px 14px;margin:8px 0;font-size:16px;font-family:inherit;cursor:pointer}
+.opt:active{border-color:var(--ac)}
+.q{font-size:20px;font-weight:700;margin:14px 0}
+.bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .4s}
+.bar.bad>i{background:linear-gradient(90deg,#f59e0b,var(--bad))}
+.hide{display:none}
+.big{font-size:30px;font-weight:800;text-align:center;color:var(--bad);margin:6px 0}
+.m{margin:14px 0}.m .l{display:flex;justify-content:space-between;font-weight:700;margin-bottom:4px}
+.msg{text-align:center;color:var(--ac2);min-height:24px;margin-top:8px}
+.spin{width:46px;height:46px;border:5px solid var(--card2);border-top-color:var(--ac);border-radius:50%;margin:20px auto;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <section id="start" class="card">
+  <h1>اختبار تحليل الشخصية</h1>
+  <button class="btn" id="go">ابدأ الاختبار</button>
+ </section>
+ <section id="quiz" class="card hide">
+  <div class="bar"><i id="fill"></i></div>
+  <p id="cnt"></p>
+  <div class="q" id="qt"></div>
+  <div id="opts"></div>
+ </section>
+ <section id="load" class="card hide" style="text-align:center">
+  <div class="spin"></div>
+  <p id="lt"></p>
+ </section>
+ <section id="res" class="card hide">
+  <p style="text-align:center">نتيجة تحليل شخصيتك</p>
+  <div class="big">شخصية سيئة ومعفنة</div>
+  <p style="text-align:center;color:var(--tx)" id="sum"></p>
+  <div id="ms"></div>
+  <p style="text-align:center;color:var(--tx);font-size:22px;font-weight:800;margin-top:18px">يلا يا عبيطة ربنا يشفيكي</p>
+  <button class="btn sec" id="again">جرب تاني</button>
+  <div class="msg" id="msg"></div>
+ </section>
+</div>
+<script>
+(function(){
+// كل خيار قيمته 0..3 ويغذي سمة: g أنانية، e حسد، h عدم أمانة، b غدر
+var Q=[
+["لما صاحبك يحقق حاجة كنت نفسك فيها، رد فعلك الحقيقي إيه؟","e",["أفرح له من قلبي","أبارك له وأنا متضايق من جوايا","أقلل من إنجازه قدام الناس","أبعد عنه وأتجاهله"]],
+["لو غلطت في حق حد ومحدش عارف إنك السبب؟","h",["أروح أعتذر له","أسكت وأنسى الموضوع","أرمي الغلط على حد تاني","أقنع نفسي إنه كان يستاهل"]],
+["لما حد يطلب منك خدمة وانت فاضي؟","g",["أساعده بدون تردد","أساعده لو ليا مصلحة منه","أتهرب بحجة إني مشغول","أرفض وأستمتع إني اتطلبت"]],
+["لو لقيت مبلغ كبير واقع في الشارع ومفيش حد شايفك؟","h",["أدور على صاحبه","أسأل شوية وبعدين آخده","آخده على طول","آخده وأتمنى لصاحبه الصبر"]],
+["لما حد يحكيلك سر ويوصيك تكتمه؟","b",["أكتمه تماماً","أحكيه لأقرب صاحب ليا بس","أحكيه بس من غير أسماء","أستخدمه ضده لو حصل خلاف"]]
+];
+var i=0,v={g:[],e:[],h:[],b:[]};
+function $(x){return document.getElementById(x)}
+function show(id){["start","quiz","load","res"].forEach(function(s){$(s).classList.toggle("hide",s!==id)});window.scrollTo(0,0)}
+function render(){
+ $("fill").style.width=(i/5*100)+"%";$("cnt").textContent="سؤال "+(i+1)+" من 5";$("qt").textContent=Q[i][0];
+ var h="";Q[i][2].forEach(function(o,k){h+='<button class="opt" data-k="'+k+'">'+o+'</button>'});$("opts").innerHTML=h;
+}
+$("go").onclick=function(){i=0;v={g:[],e:[],h:[],b:[]};show("quiz");render()};
+$("opts").onclick=function(e){
+ var b=e.target.closest(".opt");if(!b)return;
+ v[Q[i][1]].push(+b.getAttribute("data-k"));
+ i++;
+ if(i>=5)analyze();else render();
+};
+function avg(a){var s=0;a.forEach(function(x){s+=x});return a.length?s/a.length:0}
+function analyze(){
+ show("load");var m=["جاري تحليل أنماط إجاباتك...","مقارنة إجاباتك بنموذج السمات الشخصية...","حساب الدرجات النهائية..."],k=0;
+ $("lt").textContent=m[0];
+ var t=setInterval(function(){k++;if(k<m.length)$("lt").textContent=m[k]},1000);
+ setTimeout(function(){clearInterval(t);result()},3200);
+}
+function result(){
+ var N={g:"الأنانية",e:"الحسد والغيرة",h:"قلة الأمانة",b:"الغدر وكشف الأسرار"};
+ var tot=0,h="";
+ ["g","e","h","b"].forEach(function(k){
+  var p=Math.round(Math.min(99,80+avg(v[k])*6.5));tot+=p;
+  h+='<div class="m"><div class="l"><span>'+N[k]+'</span><span>'+p+'%</span></div><div class="bar bad"><i style="width:'+p+'%"></i></div></div>'});
+ var o=Math.round(tot/4);
+ h='<div class="m"><div class="l"><span>درجة سوء الشخصية الإجمالية</span><span>'+o+'%</span></div><div class="bar bad"><i style="width:'+o+'%"></i></div></div>'+h;
+ $("ms").innerHTML=h;
+ $("sum").textContent="بناءً على إجاباتك، شخصيتك سيئة من جوه، وده ظاهر في تعاملك مع صحابك ومع الناس.";
+ show("res");
+ setTimeout(function(){var f=document.querySelectorAll("#ms .bar>i");for(var q=0;q<f.length;q++)f[q].style.width=f[q].style.width},0);
+}
+$("again").onclick=function(){show("start")};
+})();
+</script>
+</body>
+</html>

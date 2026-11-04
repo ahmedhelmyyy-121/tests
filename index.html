@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Big Five Personality Test</title>
+<meta name="description" content="A Big Five personality test with 30 facets, based on the Five-Factor Model. English and Egyptian Arabic. Save and continue anytime.">
+<meta property="og:title" content="Big Five Personality Test, 30 facets">
+<meta property="og:description" content="5 traits, 30 facets, plain-language questions. English / عربي مصري">
+<style>
+:root{--bg:#0e1222;--card:#171d36;--card2:#202849;--tx:#eef1ff;--mut:#a3acd6;--ac:#7c8cff;--ac2:#5eead4;--warn:#fbbf24;--line:#2a3262}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI",Roboto,Tahoma,"Noto Naskh Arabic",Arial,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;padding:max(14px,env(safe-area-inset-top)) 14px max(28px,env(safe-area-inset-bottom))}
+.wrap{max-width:660px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-weight:800;color:var(--ac2)}
+.lang{background:var(--card2);color:var(--tx);border:1px solid #333c6b;border-radius:99px;padding:8px 16px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.card{background:var(--card);border-radius:18px;padding:20px;margin-top:14px;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+h1{font-size:26px;margin:4px 0 8px;line-height:1.25}
+h2{font-size:19px;margin:0 0 8px}
+p{margin:8px 0;color:var(--mut)}
+ul{margin:6px 0;padding-inline-start:20px;color:var(--mut)} li{margin:5px 0}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:17px;font-weight:700;color:#0b1020;background:linear-gradient(90deg,var(--ac),var(--ac2));margin-top:14px;cursor:pointer;font-family:inherit}
+.btn.sec{background:var(--card2);color:var(--tx)}
+.btn:disabled{opacity:.4}
+.bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:99px}
+.bar.s{height:6px}
+.prog{display:flex;justify-content:space-between;color:var(--mut);font-size:14px;margin-bottom:6px}
+.item{padding:16px 0;border-top:1px solid var(--line)}
+.item.first{border-top:0}
+.it{font-size:18px;font-weight:600;margin-bottom:12px;line-height:1.55}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale button{border:2px solid #333c6b;background:var(--card2);color:var(--tx);border-radius:12px;padding:9px 2px 8px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:68px}
+.scale button b{font-size:18px}
+.scale button small{font-size:10.5px;line-height:1.2;opacity:.85;font-weight:600;text-align:center}
+.scale button.on{background:var(--ac);border-color:var(--ac);color:#0b1020}
+.hide{display:none!important}
+.big{font-size:28px;font-weight:800;margin:2px 0;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.dom{padding:16px 0;border-top:1px solid var(--line)}
+.dom:first-of-type{border-top:0;padding-top:0}
+.dh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dh b{font-size:17px}.dh span.p{font-weight:800;color:var(--ac2);font-size:19px}
+.chip{display:inline-block;font-size:12px;background:var(--card2);color:var(--mut);border-radius:99px;padding:1px 10px;margin-inline-start:6px;font-weight:600;white-space:nowrap}
+.fac{margin:12px 0 0;padding:10px 12px;background:var(--card2);border-radius:12px}
+.fac .fh{display:flex;justify-content:space-between;font-size:15px;font-weight:700;margin-bottom:5px}
+.fac .ft{font-size:14px;color:var(--mut);margin-top:6px}
+.note{font-size:13px;color:var(--mut)}
+.warn{color:var(--warn)}
+svg text{fill:var(--tx);font-family:inherit}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row2 .btn{margin-top:10px;font-size:15px;padding:13px 8px}
+textarea{width:100%;background:var(--card2);color:var(--tx);border:1px solid #333c6b;border-radius:12px;padding:10px;font-size:14px;font-family:monospace;direction:ltr;resize:none}
+.box{background:var(--card2);border-radius:14px;padding:14px;margin-top:14px}
+.msg{text-align:center;color:var(--ac2);min-height:22px;margin-top:8px}
+.tag{font-size:12px;color:var(--mut)}
+details{margin-top:10px;color:var(--mut)} summary{cursor:pointer;font-weight:700;color:var(--tx)}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><div class="brand">Big Five · 30 facets</div><button class="lang" id="lang">عربي مصري</button></div>
+
+ <section id="start" class="card">
+  <h1 data-t="h1"></h1>
+  <button class="btn" id="go" data-t="begin"></button>
+  <button class="btn sec hide" id="resume"></button>
+  <div id="savedbox" class="box hide"><b data-t="savedT"></b><p data-t="savedP"></p><textarea id="codeout" rows="3" readonly></textarea><button class="btn sec" id="codecopy" data-t="copycode"></button><div class="msg" id="savemsg"></div></div>
+  <details><summary data-t="codeS"></summary><p data-t="codeP"></p><textarea id="codein" rows="3" placeholder="0123..."></textarea><button class="btn sec" id="codego" data-t="codego"></button><div class="msg" id="codemsg"></div></details>
+  <details><summary data-t="aboutS"></summary><div id="about1"></div></details>
+ </section>
+
+ <section id="quiz" class="card hide">
+  <div class="prog"><span id="pg"></span><span id="pc"></span></div>
+  <div class="bar"><i id="fill" style="width:0"></i></div>
+  <div id="items"></div>
+  <button class="btn" id="next"></button>
+  <button class="btn sec" id="prev"></button>
+  <div class="row2"><button class="btn sec" id="save"></button><button class="btn sec" id="fin"></button></div>
+  <p class="note" id="finnote" style="text-align:center"></p>
+ </section>
+
+ <section id="r1" class="card hide">
+  <div class="tag" data-t="yourprofile"></div>
+  <div class="big" id="arch"></div>
+  <p id="archd" style="color:var(--tx)"></p>
+  <p id="basis" class="note"></p>
+  <div id="radar" style="margin:8px auto;max-width:340px"></div>
+ </section>
+ <section id="r2" class="card hide"><h2 data-t="domH"></h2><div id="doms"></div></section>
+ <section id="r3" class="card hide"><h2 data-t="standH"></h2><div id="stand"></div></section>
+ <section id="r4" class="card hide"><h2 data-t="interact"></h2><div id="combos"></div></section>
+ <section id="r5" class="card hide">
+  <h2 data-t="quality"></h2><p id="qual"></p>
+  <details open><summary data-t="aboutS"></summary><div id="about2"></div></details>
+  <button class="btn" id="more" data-t="more"></button>
+  <button class="btn sec" id="share" data-t="share"></button>
+  <button class="btn sec" id="again" data-t="again"></button>
+  <div class="msg" id="msg"></div>
+ </section>
+</div>
+<script>
+(function(){
+var lang="en";
+var UI={
+h1:{en:"Big Five Personality Test",ar:"اختبار الشخصية Big Five"},
+intro:{en:"Everyday-language questions that measure the five major personality traits and 30 more specific facets underneath them. It takes about 10 minutes, and the result is a detailed profile, not just a label. You can save and continue later, or stop whenever you want and get your analysis from the answers so far.",ar:"أسئلة بلغة عادية بتقيس السمات الخمس الكبيرة في الشخصية و30 سمة فرعية تحتهم. بياخد حوالي 10 دقايق تقريباً، والنتيجة ملف تفصيلي مش مجرد لقب. تقدر تحفظ وتكمل بعدين، أو توقف في أي وقت ويطلعلك التحليل على حسب اللي جاوبت عليه."},
+begin:{en:"Start the test",ar:"ابدأ الاختبار"},
+next:{en:"Next",ar:"التالي"},fin:{en:"See my results",ar:"اعرض نتيجتي"},prev:{en:"Back",ar:"رجوع"},
+resume:{en:"Continue where I left off",ar:"كمّل من حيث وقفت"},
+savebtn:{en:"Save and continue later",ar:"احفظ وكمّل بعدين"},finbtn:{en:"Finish now and see results",ar:"خلّص دلوقتي واعرض النتيجة"},
+finnote:{en:"Results need at least 12 answers. The more you answer, the more accurate they get.",ar:"النتيجة محتاجة 12 إجابة على الأقل. كل ما جاوبت أكتر، بقت أدق."},
+savedT:{en:"Your progress is saved on this device.",ar:"تقدمك اتحفظ على الجهاز ده."},
+savedP:{en:"To continue on another phone or browser, copy this save code and paste it on the start page there.",ar:"عشان تكمل من موبايل أو متصفح تاني، انسخ كود الحفظ ده والصقه في صفحة البداية هناك."},
+copycode:{en:"Copy save code",ar:"انسخ كود الحفظ"},codeS:{en:"I have a save code",ar:"معايا كود حفظ"},
+codeP:{en:"Paste the code you copied earlier to continue from another device.",ar:"الصق الكود اللي نسخته قبل كده عشان تكمل من جهاز تاني."},
+codego:{en:"Load my progress",ar:"حمّل تقدمي"},codeok:{en:"Loaded. Tap continue.",ar:"اتحمّل. دوس كمّل."},codebad:{en:"That code isn't valid.",ar:"الكود ده مش صحيح."},codecopied:{en:"Code copied.",ar:"الكود اتنسخ."},
+more:{en:"Answer more questions to refine this",ar:"جاوب على أسئلة أكتر عشان النتيجة تبقى أدق"},
+answered:{en:"answered",ar:"إجابة"},
+basis:{en:"Based on {n} answers so far.",ar:"على أساس {n} إجابة لحد دلوقتي."},basis2:{en:" Answer more to make it more accurate.",ar:" جاوب أكتر عشان تبقى أدق."},
+few:{en:"rough",ar:"تقدير مبدئي"},nodata:{en:"Not enough answers yet for this one.",ar:"مفيش إجابات كفاية عن النقطة دي لسه."},
+yourprofile:{en:"Your profile",ar:"ملفك الشخصي"},
+domH:{en:"Your five traits and 30 facets",ar:"سماتك الخمس و30 سمة فرعية"},
+standH:{en:"What stands out most",ar:"أكتر حاجات مميزاك"},
+interact:{en:"How your traits interact",ar:"إزاي سماتك بتأثر على بعض"},
+quality:{en:"Answer quality check",ar:"فحص جودة الإجابات"},
+share:{en:"Share my result",ar:"شارك نتيجتي"},again:{en:"Retake",ar:"أعد الاختبار"},
+copied:{en:"Result copied. Paste it anywhere.",ar:"النتيجة اتنسخت، الصقها في أي مكان."},
+pg:{en:"Page",ar:"صفحة"},of:{en:"of",ar:"من"},
+low:{en:"Low",ar:"منخفض"},mid:{en:"Average",ar:"متوسط"},high:{en:"High",ar:"عالي"},
+balanced:{en:"Balanced between both ends.",ar:"متوازن بين الطرفين."},
+inst:{en:"Think about how you usually are, across the last few years. Not how you feel today, and not how you wish you were. Pick what fits you most of the time. If a statement has a few parts, go with the main idea. There are no right or wrong answers.",ar:"فكّر في إنت عامل إزاي في العادة على مدار السنين الأخيرة. مش النهاردة بس، ومش إنت عايز تبقى إزاي. اختار اللي بيناسبك في أغلب الوقت. لو الجملة فيها أكتر من فكرة، خليك مع الفكرة الأساسية. مفيش إجابة صح ولا غلط.",},
+sc:[{en:"Not me at all",ar:"مش أنا خالص"},{en:"Mostly not me",ar:"غالباً مش أنا"},{en:"In between",ar:"نص نص"},{en:"Mostly me",ar:"غالباً أنا"},{en:"Totally me",ar:"ده أنا بالظبط"}],
+qok:{en:"Your answers were consistent inside each facet, so this profile is probably a fair picture of how you see yourself.",ar:"إجاباتك كانت متسقة جوه كل سمة فرعية، فالملف غالباً صورة عادلة لشكلك في نظر نفسك."},
+qmid:{en:"A few of your answers on very similar questions pulled in different directions. That happens to everyone, but treat borderline results with extra caution.",ar:"شوية من إجاباتك على أسئلة متشابهة جداً راحت في اتجاهات مختلفة. ده بيحصل مع الكل، بس خد النتايج اللي على الحدود بحذر أكبر."},
+qbad:{en:"Your answers contradicted each other a lot, or showed one repeated pattern. This usually means rushing or misreading questions, so consider retaking it slowly.",ar:"إجاباتك اتناقضت كتير أو بانت فيها نمط متكرر. ده غالباً من الاستعجال أو سوء فهم الأسئلة، فيفضل تعيد الاختبار ببطء."},
+none:{en:"No extreme combinations stand out. Your strengths and risks depend mostly on the situation.",ar:"مفيش تركيبات متطرفة بارزة. نقاط قوتك ومخاطرك بتعتمد على الموقف أكتر من أي حاجة."},
+aboutS:{en:"How this test works and its limits",ar:"الاختبار ده بيشتغل إزاي وحدوده"}
+};
+var ABOUT={
+en:'<p><b>Model.</b> The Five-Factor Model (Costa &amp; McCrae, 1992), the most heavily researched framework in personality science. It splits personality into five domains (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism), each with six facets, 30 in total.</p><p><b>Structure.</b> Four questions per facet, half worded in the opposite direction to catch careless or agree-with-everything answering, the same layout as the IPIP-NEO-120 (Johnson, 2014, Journal of Research in Personality, 51, 78-89), built on Goldberg&#39;s public-domain IPIP item pool (ipip.ori.org).</p><p><b>Honest limits.</b> The questions here are our own plain-language rewrites aimed at the same facets, not the original validated wording, so this exact version has not been psychometrically validated. There is also no population norm table, so scores are your share of the maximum on a 0-100 scale, not a percentile against other people. Use it for self-reflection, not for diagnosis, hiring or clinical decisions. Questions about mood are not a screening for depression: if low mood or worry is affecting your daily life, please talk to a qualified professional.</p>',
+ar:'<p><b>النموذج.</b> نموذج العوامل الخمسة (Costa وMcCrae، 1992)، وده أكتر إطار اتبحث في علم نفس الشخصية. بيقسم الشخصية لخمس سمات كبيرة (الانفتاح، يقظة الضمير، الانبساط، المقبولية، العصابية)، كل واحدة فيها ست سمات فرعية، يعني 30 إجمالاً.</p><p><b>البناء.</b> أربع أسئلة لكل سمة فرعية، نصهم صياغتهم عكس الاتجاه عشان نكشف الإجابة المستعجلة أو اللي بتوافق على كل حاجة. ده نفس تقسيم IPIP-NEO-120 (Johnson، 2014، Journal of Research in Personality، 51، 78-89)، المبني على بنك أسئلة IPIP المفتوح للكل (Goldberg، ipip.ori.org).</p><p><b>حدود صريحة.</b> الأسئلة هنا صياغتنا إحنا بلغة سهلة لنفس السمات، مش الصياغة الأصلية المختبرة، فالنسخة دي بالذات مااتختبرتش إحصائياً. ومفيش جدول معايير للسكان، فالدرجات هي نسبتك من الحد الأقصى على مقياس 0 لـ100، مش ترتيبك مقارنة بالناس. استخدمه للتأمل في نفسك، مش للتشخيص ولا التوظيف ولا قرارات علاجية. أسئلة المزاج مش فحص للاكتئاب: لو الإحباط أو القلق بيأثروا على حياتك اليومية، كلم مختص.</p>'};
+var DN={O:{en:"Openness to Experience",ar:"الانفتاح على التجربة"},C:{en:"Conscientiousness",ar:"يقظة الضمير"},E:{en:"Extraversion",ar:"الانبساط"},A:{en:"Agreeableness",ar:"المقبولية والتعاون"},N:{en:"Neuroticism (Emotional Sensitivity)",ar:"العصابية (الحساسية العاطفية)"}};
+var DT={
+O:{low:{en:"You prefer what is concrete, proven and familiar. You stick with what works, which gives you stability, though you may resist change or abstract talk until you see a clear payoff.",ar:"بتفضّل الحاجات الملموسة والمجرّبة والمألوفة. بتمشي على المضمون وده بيديك ثبات، بس ممكن تقاوم التغيير أو الكلام النظري لحد ما تشوف فايدة واضحة منه."},
+ mid:{en:"You balance curiosity with practicality. You enjoy new ideas when they are useful and come back to earth when they are not.",ar:"بتوازن بين الفضول والعملية. بتستمتع بالأفكار الجديدة لما تكون مفيدة، وبترجع للواقع لما متفيدش."},
+ high:{en:"You are curious and imaginative, drawn to new ideas, art and different points of view. You question assumptions, which fuels creativity, though routine can feel suffocating.",ar:"عندك فضول وخيال واسع وبتنجذب للأفكار الجديدة والفن ووجهات النظر المختلفة. بتسأل عن المسلّمات، وده بيغذي الإبداع، بس الروتين ممكن يخنقك."}},
+C:{low:{en:"You are spontaneous and flexible, and you adapt to change easily. Structure, deadlines and follow-up take deliberate effort, so calendars, checklists and someone to check in with help you a lot.",ar:"بتحب العفوية والمرونة وبتتأقلم مع التغيير بسهولة. التنظيم والمواعيد والمتابعة بتحتاج منك مجهود مقصود، فالتقويم وقوايم المهام وإن حد يتابعك بيفيدوك جداً."},
+ mid:{en:"You have a reasonable amount of organization with some flexibility. You can structure your work when it matters and loosen up when it does not.",ar:"عندك قدر معقول من التنظيم مع مرونة. بتقدر تنظّم شغلك لما الموضوع يستاهل وتخفف لما ميبقاش لازم."},
+ high:{en:"You plan ahead, stay organized and finish what you start, and people rely on you. The risks are rigidity, perfectionism and difficulty relaxing your standards when flexibility is needed.",ar:"بتخطط وبتنظّم وبتكمّل اللي بتبدأه، وناس كتير بتعتمد عليك. المخاطر: التشدد والكمالية وصعوبة تخفيف معاييرك لما الموقف يحتاج مرونة."}},
+E:{low:{en:"You prefer small circles and deep connections over lots of contacts. You recharge alone, and your quietness is sometimes misread as aloofness when it is usually just selectiveness.",ar:"بتفضّل الدواير الصغيرة والعلاقات العميقة عن الكتر. بتشحن طاقتك وإنت لوحدك، وهدوءك ساعات بيتفهم غلط على إنه تعالي وهو غالباً انتقائية."},
+ mid:{en:"You move between outgoing and reserved depending on the situation and your energy that day. You enjoy people and you enjoy your own time.",ar:"بتتنقل بين الانبساط والانطواء حسب الموقف وطاقتك في اليوم ده. بتستمتع بالناس وبتستمتع بوقتك لوحدك."},
+ high:{en:"You get energy from people and activity. You take the lead, speak up and like being at the center of things. Long stretches alone can drain you, and sometimes you talk before you think.",ar:"بتاخد طاقتك من الناس والنشاط. بتبادر وبتتكلم وبتحب تكون في قلب الحدث. الفترات الطويلة لوحدك ممكن تستنزفك، وساعات بتتكلم قبل ما تفكر."}},
+A:{low:{en:"You are direct, skeptical and competitive, and you are not scared of disagreement or hard decisions. That helps in negotiation and critical thinking, but can come across as blunt or cold.",ar:"أسلوبك مباشر ومتشكك وتنافسي، ومبتخافش من الخلاف ولا القرارات الصعبة. ده مفيد في التفاوض والتفكير النقدي، بس ممكن يتفهم إنه جاف أو حاد."},
+ mid:{en:"You cooperate without being a pushover: kind in how you treat people, while holding your ground when your interests are on the line.",ar:"بتتعاون مع الناس من غير ما حد يقدر يستغلك بسهولة: لطيف في التعامل، وفي نفس الوقت بتمسك بحقك لما مصلحتك تتحط على المحك."},
+ high:{en:"You are warm, cooperative and trusting, with strong empathy. People feel safe around you. The price can be difficulty saying no, avoiding confrontation, or having your kindness taken advantage of.",ar:"عندك دفا وتعاون وثقة في الناس وتعاطف قوي. الناس بتحس بالأمان معاك. التمن ممكن يبقى صعوبة قول لأ وتجنب المواجهة وإن حد يستغل طيبتك."}},
+N:{low:{en:"You are cool-headed and bounce back from stress easily. The flip side is that you may underestimate risks or miss how stressed the people around you are.",ar:"أعصابك باردة وبتتخطى الضغوط بسهولة. الوجه التاني إنك ممكن تستهين بالمخاطر أو متاخدش بالك قد إيه اللي حواليك متوترين."},
+ mid:{en:"Your emotional reactions are typical: you feel stress when the pressure is real, and you settle down in a reasonable amount of time.",ar:"تفاعلك العاطفي عادي: بتتوتر لما الضغط يبقى حقيقي وبتهدى في وقت معقول."},
+ high:{en:"You feel emotions strongly and notice risks and problems quickly. That sensitivity can make you prepared and empathetic, but worry, stress and mood swings may hit you harder than most people. Steady routines, good sleep and supportive people help.",ar:"بتحس بمشاعرك بشدة وبتنتبه للمخاطر والمشاكل بسرعة. الحساسية دي ممكن تخليك مستعد ومتعاطف، بس القلق والتوتر وتقلب المزاج ممكن يزيدوا عندك عن أغلب الناس. الروتين الثابت والنوم الكويس والناس الداعمة بيفيدوك."}}
+};
+// facets: [domain, nameEN, nameAR, lowEN, lowAR, highEN, highAR, items[[en,ar,rev]x4]]
+var F=[
+["N","Worry","القلق","calm, rarely frets","هدوء وقلق قليل","worries a lot, expects trouble","قلق كتير وتوقع للأسوأ",[
+["I worry a lot about things that might go wrong, even small stuff.","بقلق كتير من الحاجات اللي ممكن تبوظ، حتى الصغيرة منها.",0],
+["When something uncertain is coming up, I tend to expect the worst.","لما يكون في حاجة مش مضمونة جاية، بتوقع الأسوأ.",0],
+["I usually stay calm before big events like exams or job interviews.","غالباً بفضل هادي البال قبل الحاجات الكبيرة زي الامتحانات أو مقابلات الشغل.",1],
+["When something stressful is coming, I can easily put it out of my mind.","لما حاجة ضاغطة تقرّب، بعرف أشيلها من دماغي بسهولة.",1]]],
+["N","Anger","العصبية","slow to anger","صعب يتعصب","quick to get irritated","بيتعصب بسرعة",[
+["Small annoyances set me off faster than they seem to set off most people.","حاجات صغيرة بتعصبني أسرع من أغلب الناس.",0],
+["When someone treats me unfairly, I stay angry about it for a while.","لما حد يظلمني، بيفضل دمي فاير فترة.",0],
+["I rarely lose my temper.","نادراً أوي إني أفقد أعصابي.",1],
+["It takes a lot to really make me angry.","عشان أتعصب فعلاً، لازم يحصل حاجة كبيرة أوي.",1]]],
+["N","Low mood","الإحباط والزهق","mostly upbeat and resilient","مزاج كويس غالباً وقوة على التعافي","prone to feeling down or discouraged","عرضة للإحباط والزهق",[
+["I often feel down or discouraged for no clear reason.","كتير بحس بإحباط أو زهق من غير سبب واضح.",0],
+["Sometimes I feel like things are never going to get better.","أوقات بحس إن الأمور عمرها ما هتتحسن.",0],
+["Most days I feel pretty good about my life.","في أغلب الأيام بحس إن حياتي ماشية كويس.",1],
+["I bounce back quickly after a disappointment.","بقوم بسرعة بعد أي خيبة أمل.",1]]],
+["N","Self-consciousness","الخجل من نظرة الناس","unbothered by others' opinions","رأي الناس مش فارق","sensitive to embarrassment and judgment","حساسية للإحراج وحكم الناس",[
+["I get embarrassed easily in front of other people.","بتكسف بسهولة قدام الناس.",0],
+["I replay awkward moments in my head long after they happen.","بفضل أفتكر المواقف المحرجة وأعيدها في دماغي بعد ما تعدي بفترة طويلة.",0],
+["I really don't care what strangers think of me.","رأي الناس الغريبة فيا مش فارق معايا.",1],
+["It doesn't bother me to have everyone's eyes on me when the situation calls for it.","عادي عندي إن كل العيون تبقى عليا لما الموقف يتطلب كده.",1]]],
+["N","Cravings and impulses","الاندفاع والرغبات","resists temptation easily","مقاومة الإغراء بسهولة","finds it hard to say no to urges","صعوبة في قول لأ للرغبات",[
+["When I really want something, like food, shopping, or scrolling my phone, it's hard to tell myself no.","لما أشتهي حاجة أوي (أكل، شراء، أو سكرول على الموبايل) بيصعب عليا أقول لنفسي لأ.",0],
+["I often do things on impulse and regret them later.","كتير بعمل حاجات بدافع اللحظة وبندم عليها بعدين.",0],
+["I can resist temptation pretty easily.","بقاوم الإغراءات بسهولة.",1],
+["I rarely overdo it, whether it's eating, spending, or screen time.","نادراً ما بزودها، سواء في الأكل أو الصرف أو وقت الموبايل.",1]]],
+["N","Handling pressure","تحمّل الضغط","stays clear-headed under pressure","تفكير واضح تحت الضغط","feels overwhelmed under pressure","تلخبط تحت الضغط",[
+["When the pressure gets really high, I feel like it's more than I can handle.","لما الضغط بيزيد أوي، بحس إن الموضوع أكبر مني وبتلخبط.",0],
+["In a crisis, I tend to panic.","في الأزمات بتوتر وبتلخبط.",0],
+["In an emergency, I keep thinking clearly.","في الطوارئ بفضل بفكر بوضوح.",1],
+["Under pressure, I can usually think straight and make decisions.","تحت الضغط غالباً بعرف أفكر صح وآخد قرارات.",1]]],
+
+["E","Friendliness","الود وسهولة التعارف","reserved, slow to open up","تحفظ وبطء في الانفتاح","warm, makes friends easily","دفا وسهولة في تكوين الصداقات",[
+["I make friends easily.","بعمل صحاب بسهولة.",0],
+["I warm up to new people quickly.","بتعود على الناس الجديدة بسرعة.",0],
+["It takes me a long time to feel close to someone.","بياخد مني وقت طويل لحد ما أحس إني قريب من حد.",1],
+["I tend to keep most people at a distance.","بفضل أبعد مسافة بيني وبين أغلب الناس.",1]]],
+["E","Sociability","حب الناس والتجمعات","prefers solitude or small circles","تفضيل الوحدة أو الدايرة الصغيرة","energized by crowds and gatherings","التجمعات بتديك طاقة",[
+["I love being around lots of people.","بحب أكون وسط ناس كتير.",0],
+["A party or a big gathering gives me energy.","الفرح أو التجمع الكبير بيديني طاقة.",0],
+["I'd rather spend an evening alone than at a crowded event.","أفضّل أقضي السهرة لوحدي عن إني أروح مكان زحمة.",1],
+["Big crowds wear me out quickly.","الزحمة بتتعبني بسرعة.",1]]],
+["E","Assertiveness","الحزم وأخذ المبادرة","lets others lead","ميل إنك تسيب غيرك يقود","takes charge and speaks up","ميل للقيادة وقول الرأي بصراحة",[
+["In a group, I'm usually the one who takes charge.","في أي مجموعة، غالباً أنا اللي بقود.",0],
+["I say what I think, even when it's not going to be popular.","بقول رأيي حتى لو مش هيعجب الناس.",0],
+["I usually let other people make the decisions.","غالباً بسيب غيري ياخد القرارات.",1],
+["It's hard for me to speak up in meetings or group chats.","بيصعب عليا أتكلم في اجتماع أو جروب.",1]]],
+["E","Energy and pace","النشاط والإيقاع","easygoing, slow pace","هدوء وإيقاع بطيء","fast-paced and always busy","سرعة ونشاط ومشغول دايماً",[
+["I'm always on the go and I like to stay busy.","دايماً في حركة وبحب أفضل مشغول.",0],
+["I do things quickly and with a lot of energy.","بعمل الحاجات بسرعة وبحماس.",0],
+["I prefer a slow, easy pace in life.","بفضل إيقاع بطيء وهادي في حياتي.",1],
+["I like to take my time and not rush around.","بحب آخد وقتي ومش بحب الجري.",1]]],
+["E","Thrill-seeking","حب الإثارة","plays it safe","تفضيل الأمان","craves excitement and novelty","بحث عن الإثارة والجديد",[
+["I'm drawn to thrills, like roller coasters, risky sports, or a spontaneous trip.","بنجذب للإثارة، زي الملاهي أو الرياضات الخطرة أو سفر مفاجئ.",0],
+["I get bored when life gets too predictable.","بزهق لو الحياة بقت متوقعة أوي.",0],
+["I'd rather play it safe than chase excitement.","أفضّل ألعبها آمن عن إني أجري ورا الإثارة.",1],
+["I don't enjoy things that carry real risk.","مبستمتعش بالحاجات اللي فيها مخاطرة.",1]]],
+["E","Cheerfulness","البهجة والتفاؤل","serious and low-key","جدية وهدوء","upbeat, quick to laugh","مزاج حلو وضحك بسهولة",[
+["I laugh a lot and see the funny side of things.","بضحك كتير وببص على الجانب المضحك في الحاجات.",0],
+["Most days I'm in a good mood and full of enthusiasm.","في أغلب الأيام بكون في مزاج حلو وحماس.",0],
+["It's not easy for me to get excited about things.","الحماس مبيجيليش بسهولة للحاجات.",1],
+["I'm usually serious and low-key about life.","غالباً بكون جد وهادي في تعاملي مع الحياة.",1]]],
+
+["O","Imagination","الخيال","practical, focused on what is real","عملية وتركيز على الواقع","vivid imagination, daydreams a lot","خيال واسع وسرحان كتير",[
+["I have a vivid imagination and I often get lost in daydreams.","خيالي واسع وكتير بسرح في أحلام اليقظة.",0],
+["I enjoy making up stories or imagining 'what if' situations.","بحب أألف حكايات أو أتخيل 'لو حصل كذا'.",0],
+["I'd rather focus on what's real than let my mind drift.","بفضل أركز على الواقع بدل ما أسرح.",1],
+["I rarely let my mind wander.","نادراً بخلي دماغي تسرح.",1]]],
+["O","Artistic interest","الذوق الفني","not drawn to art","قلة انجذاب للفن","moved by art, music and beauty","الفن والموسيقى والجمال بيأثروا فيك",[
+["Music, art, or poetry can move me deeply.","الموسيقى أو الفن أو الشعر ممكن يأثروا فيا أوي.",0],
+["I enjoy museums, art exhibits, or artistic films.","بستمتع بزيارة المتاحف أو معارض الفن أو الأفلام الفنية.",0],
+["I don't see much value in art or poetry.","مبلاقيش قيمة كبيرة في الفن أو الشعر.",1],
+["I rarely notice beauty in everyday things.","نادراً ما بلاحظ الجمال في الحاجات العادية.",1]]],
+["O","Emotional awareness","الوعي بالمشاعر","plays down or struggles to read own feelings","تقليل من المشاعر أو صعوبة في فهمها","tuned in to own feelings, feels them deeply","وعي بالمشاعر وإحساس بيها بعمق",[
+["I usually know exactly what I'm feeling at any given moment.","غالباً بعرف بالظبط مشاعري إيه في أي وقت.",0],
+["My emotions are strong and I experience them deeply.","مشاعري قوية وبعيشها بعمق.",0],
+["It's hard for me to put my feelings into words, or even to understand them.","بيصعب عليا أوصف مشاعري أو حتى أفهمها.",1],
+["I rarely go through strong emotions.","نادراً ما بمر بمشاعر قوية.",1]]],
+["O","Adventurousness","حب التجديد","prefers routine and the familiar","تفضيل الروتين والمألوف","loves variety and new experiences","حب للتنوع والتجارب الجديدة",[
+["I love trying new foods, places, and activities.","بحب أجرب أكل وأماكن وأنشطة جديدة.",0],
+["The idea of moving to a new city or country for a fresh start excites me.","فكرة إني أنتقل لمدينة أو بلد جديدة عشان بداية جديدة بتحمسني.",0],
+["I stick to my usual routine and my usual places.","بلتزم بروتيني وأماكني المعتادة.",1],
+["Change makes me uncomfortable.","التغيير بيضايقني.",1]]],
+["O","Intellectual curiosity","الفضول الفكري","uninterested in abstract debate","قلة اهتمام بالنقاشات النظرية","enjoys ideas and learning","استمتاع بالأفكار والتعلم",[
+["I enjoy thinking about abstract ideas, like philosophy or how the universe works.","بستمتع أفكر في أفكار مجردة، زي الفلسفة أو إزاي الكون شغال.",0],
+["I love finding out how things work, just out of curiosity.","بحب أعرف الحاجات بتشتغل إزاي، بدافع الفضول بس.",0],
+["I tend to avoid heavy intellectual discussions.","بتجنب المناقشات الفكرية التقيلة.",1],
+["I don't see the point of debating theoretical questions.","مبشوفش فايدة من نقاش الأسئلة النظرية.",1]]],
+["O","Questioning tradition","تحدي التقاليد","values tradition and established authority","احترام للتقاليد والسلطة المعروفة","questions convention, open to different views","تساؤل عن المسلّمات وانفتاح على آراء مختلفة",[
+["I like asking why we do things the way we've always done them.","بحب أسأل ليه بنعمل الحاجات بالطريقة اللي دايماً بنعملها بيها.",0],
+["I listen with an open mind to views that are very different from mine.","بسمع لآراء مختلفة جداً عن رأيي بعقل مفتوح.",0],
+["I think traditional values and established rules should be followed.","أعتقد إن القيم التقليدية والقواعد المتعارف عليها لازم تتبع.",1],
+["I trust established authorities more than I trust new ideas.","بثق في السلطات المتعارف عليها أكتر من الأفكار الجديدة.",1]]],
+
+["A","Trust","الثقة في الناس","wary of others' motives","حذر من نوايا الناس","assumes good intentions","افتراض حسن النية",[
+["I assume most people have good intentions.","بفترض إن أغلب الناس نيتهم كويسة.",0],
+["I'm quick to trust someone I've just met.","بثق بسرعة في حد لسه عارفه.",0],
+["I'm suspicious of people's motives.","بشك في نوايا الناس.",1],
+["I feel like most people would take advantage of me if they could.","بحس إن أغلب الناس هيستغلوني لو قدروا.",1]]],
+["A","Straightforwardness","الصراحة والأمانة","willing to bend the truth","استعداد للف الحقيقة","honest and direct","صدق ومباشرة",[
+["I tell the truth even when a lie would be easier.","بقول الحقيقة حتى لما الكدب يبقى أسهل.",0],
+["I keep my promises, even when it costs me something.","بحافظ على وعودي حتى لو هتكلفني.",0],
+["I'll bend the truth if it gets me what I want.","ممكن ألوي الحقيقة لو هتوصلني للي عايزه.",1],
+["Sometimes I use flattery or a small white lie to get my way.","أوقات بستخدم المجاملة أو كدبة صغيرة عشان أوصل لحاجة.",1]]],
+["A","Helpfulness","حب المساعدة","keeps to own affairs","تركيز على شؤونك","goes out of the way to help","بتطلع من طريقك عشان تساعد",[
+["I go out of my way to help people, even strangers.","بطلع من طريقي عشان أساعد الناس، حتى الغرباء.",0],
+["I enjoy doing favors for others.","بستمتع إني أعمل خدمات للناس.",0],
+["I mind my own business and let everyone handle their own life.","بركز في شغلي وبسيب كل واحد يتصرف في حياته.",1],
+["I don't like it when someone asks me for help.","مش بحب لما حد يطلب مني مساعدة.",1]]],
+["A","Cooperation","التعاون وتجنب الخناق","competitive, comfortable with conflict","تنافسية وراحة مع الخلاف","avoids conflict, seeks compromise","تجنب الخناق وحب للحل الوسط",[
+["I try to avoid arguments and find a middle ground.","بحاول أتجنب الخناق وأوصل لحل وسط.",0],
+["I'd rather give in than start a fight.","أفضّل أتنازل عن إني أبدأ خناقة.",0],
+["I enjoy a heated debate and I don't back down easily.","بحب النقاش الحامي ومش بتراجع بسهولة.",1],
+["I hold my ground even when it creates tension.","بتمسك بموقفي حتى لو ده هيعمل توتر.",1]]],
+["A","Modesty","التواضع","confident about own worth and open about it","ثقة في القيمة الذاتية وإظهارها","humble, downplays achievements","تواضع وتقليل من الإنجازات",[
+["I don't like to brag about my accomplishments.","مش بحب أتفاخر بإنجازاتي.",0],
+["I tend to downplay my strengths.","بميل أقلل من نقاط قوتي.",0],
+["I think I'm better than most people at a lot of things.","بشوف نفسي أحسن من أغلب الناس في حاجات كتير.",1],
+["I deserve more recognition than I get.","أستحق تقدير أكتر من اللي باخده.",1]]],
+["A","Compassion","التعاطف","tough-minded, self-reliance focus","عملية وإيمان بالاعتماد على النفس","moved by others' suffering","تأثر بمعاناة الناس",[
+["When I see people struggling, my heart goes out to them.","لما بشوف ناس بتعاني، قلبي بيوجعني عليهم.",0],
+["News stories about people suffering can bring me to tears.","أخبار عن ناس بتتألم ممكن تخليني أعيّط.",0],
+["I believe people should solve their own problems instead of leaning on others.","أعتقد إن الناس لازم تحل مشاكلها بنفسها من غير ما تتكل على غيرها.",1],
+["Other people's problems don't really move me much.","مشاكل الناس مبتحركش فيا حاجة كتير.",1]]],
+
+["C","Self-confidence in ability","الثقة في القدرات","doubts own competence","شك في القدرات","feels capable and effective","إحساس بالكفاءة والقدرة",[
+["I'm confident I can handle whatever tasks come my way.","عندي ثقة إني هقدر أتعامل مع أي مهمة تيجي في طريقي.",0],
+["I can usually find a way to get things done.","غالباً بلاقي طريقة أخلص بيها الحاجات.",0],
+["I often doubt whether I'm capable enough for the job.","كتير بشك في قدرتي على الشغلانة.",1],
+["I often feel lost about how to handle tasks.","كتير بتلخبط في المهام ومعرفش أبدأ منين.",1]]],
+["C","Orderliness","الترتيب والتنظيم","relaxed about mess and schedules","راحة مع الفوضى وعدم الجدولة","neat, planned, organized","ترتيب وتخطيط وتنظيم",[
+["I like to keep my space and my stuff neat, with everything in its place.","بحب أحافظ على مكاني وحاجاتي مرتبين وكل حاجة في مكانها.",0],
+["I plan my day or my week and stick to a schedule.","بخطط يومي أو أسبوعي وبمشي على جدول.",0],
+["My room or desk is usually a mess.","أوضتي أو مكتبي غالباً بيبقوا مبهدلين.",1],
+["I often lose things because I don't put them back where they belong.","كتير بضيع حاجات عشان مش بحطها في مكانها.",1]]],
+["C","Reliability","الالتزام بالواجبات","flexible about obligations and rules","مرونة مع الالتزامات والقواعد","keeps commitments, follows through","التزام بالوعود وإنجاز اللي بيبدأه",[
+["I always do what I've promised or what's expected of me.","دايماً بعمل اللي وعدت بيه أو المتوقع مني.",0],
+["I take my obligations seriously, even the boring ones.","باخد التزاماتي بجدية حتى المملة.",0],
+["Sometimes I skip things I'm supposed to do.","أوقات بتجاهل حاجات المفروض أعملها.",1],
+["I bend the rules when they get in my way.","بتحايل على القواعد لما بتعطلني.",1]]],
+["C","Drive","الطموح والسعي للإنجاز","content with what is enough","رضا بالكفاية","ambitious, pushes to excel","طموح ودفع للنفس للتميز",[
+["I set high goals and work hard to reach them.","بحط أهداف عالية وبشتغل بجد عشان أوصلها.",0],
+["I push myself to do better than I did before.","بدفع نفسي أعمل أحسن من قبل.",0],
+["Doing the minimum that's required is enough for me.","الحد الأدنى المطلوب بيكفيني.",1],
+["I don't have big ambitions.","ماعنديش طموحات كبيرة.",1]]],
+["C","Self-discipline","الانضباط الذاتي","procrastinates, easily distracted","تأجيل وتشتت","starts tasks and finishes them","بداية المهام وإنهاؤها",[
+["I start tasks right away instead of putting them off.","ببدأ المهام على طول بدل ما أأجل.",0],
+["I can make myself work even when I don't feel like it.","بقدر أجبر نفسي أشتغل حتى لو مليش مزاج.",0],
+["I often put things off until the last minute.","كتير بأجل لآخر لحظة.",1],
+["I get distracted easily and have trouble finishing what I start.","بتشتت بسهولة وبيصعب عليا أخلص اللي بدأته.",1]]],
+["C","Deliberation","التروّي","acts on impulse","تصرف بسرعة واندفاع","thinks before acting","تفكير قبل التصرف",[
+["I think carefully before making a decision.","بفكر كويس قبل ما آخد قرار.",0],
+["I double-check my work to avoid mistakes.","براجع شغلي مرتين عشان أتجنب الغلط.",0],
+["I often act first and think later.","كتير بتصرف الأول وأفكر بعدين.",1],
+["I make quick decisions without weighing the downsides.","باخد قرارات سريعة من غير ما أوزن السلبيات.",1]]]
+];
+var DOM=["N","E","O","A","C"];
+var ARCH=[
+[function(p){return p.N<=38&&p.C>=62&&p.E>=62},"The Steady Leader","نمط القائد الثابت","Cool-headed under pressure, organized and confident with people. Others look to you when things get complicated.","أعصابك باردة تحت الضغط، وبتنظّم شغلك وبتتعامل مع الناس بثقة. الناس بتلجأ لك لما الدنيا تتعقد."],
+[function(p){return p.O>=62&&p.C>=62},"The Architect","نمط المهندس المبتكر","Original ideas plus the discipline to build them. A rarer mix than either trait alone.","أفكار أصيلة ومعاها الانضباط اللي يبنيها. تركيبة أندر من أي سمة لوحدها."],
+[function(p){return p.O>=62&&p.C<=38},"The Free Thinker","نمط المفكر الحر","Imaginative and flexible, with more ideas than finishing time. Systems and deadlines are on your side.","خيالك واسع ومرن، وأفكارك أكتر من وقت التنفيذ. الأنظمة والمواعيد النهائية في صفك."],
+[function(p){return p.E>=62&&p.A>=62},"The Connector","نمط الرابط الاجتماعي","Warm, outgoing and trusting. You make any gathering feel better.","دفا وانفتاح وثقة في الناس. بتخلي أي قعدة أحلى."],
+[function(p){return p.A>=62&&p.C>=62},"The Dependable Ally","نمط السند الموثوق","Caring and reliable. People trust you with what matters.","حنية وموثوقية. الناس بتأتمنك على الحاجات المهمة."],
+[function(p){return p.E<=38&&p.O>=62},"The Quiet Thinker","نمط المفكر الهادئ","A rich inner world, and a preference for depth over small talk.","عالم جواك غني، وبتفضّل العمق على الكلام السطحي."],
+[function(p){return p.N>=62&&p.O>=62},"The Sensitive Creator","نمط المبدع الحساس","Strong feelings and a wide imagination: a classic artistic profile that benefits from good self-care.","مشاعر قوية وخيال واسع، ملف فني كلاسيكي بيستفيد من العناية الجيدة بنفسك."],
+[function(p){return p.A<=38&&p.C>=62},"The Pragmatic Strategist","نمط الاستراتيجي العملي","Results-focused, direct and disciplined. You decide on evidence, not feelings.","تركيزك على النتايج، وأسلوبك مباشر ومنضبط. بتقرر بالأدلة مش بالمشاعر."],
+[function(p){return p.E<=38&&p.N<=38},"The Calm Observer","نمط المراقب الهادئ","Self-contained and hard to rattle. You watch, think, then act.","بتكتفي بنفسك وأعصابك باردة. بتراقب وتفكر وبعدين تتحرك."]
+];
+var COMBO=[
+[function(p){return p.N>=62&&p.C>=62},"Perfectionism risk: high standards combined with high worry can turn diligence into self-pressure. Decide in advance what 'good enough' looks like.","خطر الكمالية: معايير عالية مع قلق عالي ممكن يحولوا الاجتهاد لضغط على نفسك. حدد من الأول يعني إيه 'كويس كفاية'."],
+[function(p){return p.O>=62&&p.C<=38},"Lots of ideas, less follow-through. Pair ideas with deadlines, or with a partner who finishes things.","أفكار كتير ومتابعة أقل. اربط الأفكار بمواعيد نهائية أو بشريك بيكمّل."],
+[function(p){return p.E>=62&&p.A<=38},"Assertive and competitive socially: effective at leading and negotiating, but watch for steamrolling quieter people.","حازم وتنافسي اجتماعياً: فعال في القيادة والتفاوض، بس خلي بالك من تجاهل الأهدى منك."],
+[function(p){return p.E<=38&&p.A>=62},"Quietly caring: you build deep one-on-one bonds, though others may not realize how much you notice.","حنية بهدوء: بتبني علاقات عميقة فردية، والناس ممكن متدركش قد إيه إنت واخد بالك."],
+[function(p){return p.N>=62&&p.E<=38},"Introversion plus sensitivity means overstimulation hits faster. Protect your downtime on purpose.","الانطواء مع الحساسية معناه إن الإرهاق الحسي بيجي أسرع. احمي وقت راحتك بشكل مقصود."],
+[function(p){return p.C<=38&&p.N<=38},"Relaxed about deadlines and unbothered by consequences. That feels good to you, but other people may end up carrying the stress.","مرتاح مع المواعيد ومش بتشيل هم العواقب. ده مريح ليك، بس ممكن غيرك يشيل الضغط."],
+[function(p){return p.A>=62&&p.N>=62},"You soak up other people's emotions easily. Boundaries and recovery time matter a lot for you.","بتمتص مشاعر الناس بسهولة. الحدود الشخصية ووقت التعافي مهمين جداً ليك."],
+[function(p){return p.E>=62&&p.C<=38},"Energetic and spontaneous: great in the moment, but long-term plans can slip without some structure.","نشاط وعفوية: حلو في اللحظة، بس الخطط الطويلة ممكن تتعثر من غير شوية تنظيم."]
+];
+var ans={},page=0,PER=10,res=null,order=[],TOT=120,MIN=12;
+// ترتيب مخلوط ثابت (بذرة ثابتة)
+(function(){var a=[],i;for(i=0;i<TOT;i++)a.push(i);var s=20240611;function r(){s=(s*1664525+1013904223)%4294967296;return s/4294967296}
+for(i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}order=a})();
+function $(i){return document.getElementById(i)}
+function t(o){return o[lang]}
+function lv(v){return v>=62?"high":v<=38?"low":"mid"}
+function cnt(){var c=0;for(var k in ans)c++;return c}
+function save(){try{localStorage.setItem("b5v2",JSON.stringify(ans))}catch(e){}}
+function load(){try{var s=localStorage.getItem("b5v2");if(s)return JSON.parse(s)}catch(e){}return null}
+function clr(){try{localStorage.removeItem("b5v2")}catch(e){}}
+function applyLang(){
+ document.documentElement.lang=lang==="ar"?"ar":"en";document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ $("lang").textContent=lang==="ar"?"English":"عربي مصري";
+ document.title=lang==="ar"?"اختبار الشخصية Big Five":"Big Five Personality Test";
+ var els=document.querySelectorAll("[data-t]");for(var i=0;i<els.length;i++)els[i].textContent=t(UI[els[i].getAttribute("data-t")]);
+  $("about1").innerHTML=ABOUT[lang];$("about2").innerHTML=ABOUT[lang];
+ $("resume").textContent=t(UI.resume);$("save").textContent=t(UI.savebtn);$("fin").textContent=t(UI.finbtn);$("finnote").textContent=t(UI.finnote);
+ if(!$("quiz").classList.contains("hide"))renderPage();
+ if(res)renderRes();
+}
+function show(ids){["start","quiz","r1","r2","r3","r4","r5"].forEach(function(s){$(s).classList.toggle("hide",ids.indexOf(s)<0)});window.scrollTo(0,0)}
+function renderPage(){
+ var h="";
+ for(var k=0;k<PER;k++){
+  var g=order[page*PER+k],fi=Math.floor(g/4),ji=g%4,it=F[fi][7][ji];
+  h+='<div class="item'+(k?'':' first')+'"><div class="it">'+(lang==="ar"?it[1]:it[0])+'</div><div class="scale" data-g="'+g+'">';
+  for(var v=1;v<=5;v++)h+='<button data-v="'+v+'"'+(ans[g]===v?' class="on"':'')+'><b>'+v+'</b><small>'+t(UI.sc[v-1])+'</small></button>';
+  h+='</div></div>';
+ }
+ $("items").innerHTML=h;
+ $("pg").textContent=t(UI.pg)+" "+(page+1);
+ refresh();
+ $("prev").textContent=t(UI.prev);$("prev").classList.toggle("hide",page===0);
+ $("next").textContent=page===11?t(UI.fin):t(UI.next);
+}
+function refresh(){
+ var tot=cnt();
+ $("fill").style.width=(tot/TOT*100)+"%";$("pc").textContent=tot+" "+t(UI.answered);
+ $("fin").disabled=tot<MIN;
+}
+function firstOpen(){for(var p=0;p<12;p++){for(var k=0;k<PER;k++)if(!ans[order[p*PER+k]])return p}return 11}
+function mkcode(){var c="";for(var g=0;g<TOT;g++)c+=(ans[g]||0);return c}
+function loadcode(c){c=(c||"").replace(/\s/g,"");if(!new RegExp("^[0-5]{"+TOT+"}$").test(c))return false;var n={};for(var g=0;g<TOT;g++)if(c.charAt(g)!=="0")n[g]=+c.charAt(g);ans=n;save();return true}
+function syncStart(){$("resume").classList.toggle("hide",cnt()===0)}
+$("lang").onclick=function(){lang=lang==="en"?"ar":"en";applyLang()};
+$("go").onclick=function(){ans={};clr();page=0;res=null;$("savedbox").classList.add("hide");show(["quiz"]);renderPage()};
+$("resume").onclick=function(){var s=load();if(s&&cnt()===0)ans=s;page=firstOpen();show(["quiz"]);renderPage()};
+$("more").onclick=function(){page=firstOpen();show(["quiz"]);renderPage()};
+$("items").onclick=function(e){
+ var b=e.target.closest("button");if(!b)return;
+ var g=+b.parentNode.getAttribute("data-g");ans[g]=+b.getAttribute("data-v");save();
+ var bs=b.parentNode.children;for(var i=0;i<bs.length;i++)bs[i].classList.remove("on");b.classList.add("on");refresh();
+ var nx=b.closest(".item").nextElementSibling;if(nx){var r=nx.getBoundingClientRect();if(r.bottom>innerHeight-60||r.top<0)nx.scrollIntoView({behavior:"smooth",block:"center"})}
+};
+$("next").onclick=function(){if(page<11){page++;renderPage();window.scrollTo(0,0)}else if(cnt()>=MIN)compute()};
+$("prev").onclick=function(){if(page>0){page--;renderPage();window.scrollTo(0,0)}};
+$("fin").onclick=function(){if(cnt()>=MIN)compute()};
+$("save").onclick=function(){save();$("codeout").value=mkcode();$("savedbox").classList.remove("hide");$("savemsg").textContent="";syncStart();show(["start"])};
+$("codecopy").onclick=function(){var c=$("codeout");c.select();var ok=function(){$("savemsg").textContent=t(UI.codecopied)};try{navigator.clipboard.writeText(c.value).then(ok,function(){document.execCommand("copy");ok()})}catch(e){try{document.execCommand("copy");ok()}catch(x){}}};
+$("codego").onclick=function(){if(loadcode($("codein").value)){$("codemsg").textContent=t(UI.codeok);syncStart()}else $("codemsg").textContent=t(UI.codebad)};
+$("again").onclick=function(){ans={};clr();res=null;$("savedbox").classList.add("hide");syncStart();show(["start"])};
+function compute(){
+ var fs=[],fc=[],ds={O:0,C:0,E:0,A:0,N:0},dn={O:0,C:0,E:0,A:0,N:0},sd=0,sdn=0,rawSum=0,rawN=0,hist=[0,0,0,0,0,0];
+ for(var fi=0;fi<30;fi++){
+  var vals=[],sum=0;
+  for(var j=0;j<4;j++){var g=fi*4+j,raw=ans[g];if(!raw)continue;rawSum+=raw;rawN++;hist[raw]++;var v=F[fi][7][j][2]?6-raw:raw;vals.push(v);sum+=v}
+  var n=vals.length;fc[fi]=n;
+  if(n){var m=sum/n,vr=0;fs[fi]=Math.round((m-1)/4*100);ds[F[fi][0]]+=sum;dn[F[fi][0]]+=n;
+   if(n>=2){vals.forEach(function(x){vr+=(x-m)*(x-m)});sd+=Math.sqrt(vr/n);sdn++}}
+  else fs[fi]=null;
+ }
+ var p={};for(var k in ds)p[k]=dn[k]?Math.round((ds[k]/dn[k]-1)/4*100):null;
+ var mx=Math.max.apply(null,hist.slice(1)),acq=rawN?rawSum/rawN:3;
+ res={f:fs,fc:fc,p:p,n:rawN,sd:sdn?sd/sdn:0,line:rawN>=20&&mx/rawN>=0.85,acq:rawN>=20&&(acq>=4.1||acq<=1.9)};
+ renderRes();show(["r1","r2","r3","r4","r5"]);
+}
+function arch(p){for(var i=0;i<ARCH.length;i++)if(ARCH[i][0](p))return ARCH[i];return[null,"The Balanced Adaptor","نمط المتكيف المتوازن","No single trait dominates your profile, so you adapt your style to the situation.","مفيش سمة واحدة طاغية عليك، فبتغيّر أسلوبك حسب الموقف."]}
+function pole(fi,v){var f=F[fi],L=lv(v);return L==="high"?t({en:f[5],ar:f[6]}):L==="low"?t({en:f[3],ar:f[4]}):t(UI.balanced)}
+function pl(p){var q={};for(var k in p)q[k]=p[k]==null?50:p[k];return q}
+function renderRes(){
+ var p=res.p,pp0=pl(p),a=arch(pp0);
+ $("arch").textContent=lang==="ar"?a[2]:a[1];
+ $("archd").textContent=lang==="ar"?a[4]:a[3];
+ $("basis").textContent=t(UI.basis).replace("{n}",res.n)+(res.n<TOT?t(UI.basis2):"");
+ $("more").classList.toggle("hide",res.n>=TOT);
+ var o=["O","C","E","A","N"],cx=170,cy=150,R=100,pts=[],axes="",labs="",rings="";
+ [25,50,75,100].forEach(function(r){var pp=o.map(function(_,i){var an=-Math.PI/2+i*2*Math.PI/5;return(cx+R*r/100*Math.cos(an)).toFixed(1)+","+(cy+R*r/100*Math.sin(an)).toFixed(1)}).join(" ");rings+='<polygon points="'+pp+'" fill="none" stroke="#333c6b" stroke-width="1"/>'});
+ o.forEach(function(k,i){var an=-Math.PI/2+i*2*Math.PI/5,pv=p[k]==null?0:p[k];
+  axes+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*Math.cos(an)).toFixed(1)+'" y2="'+(cy+R*Math.sin(an)).toFixed(1)+'" stroke="#333c6b"/>';
+  pts.push((cx+R*pv/100*Math.cos(an)).toFixed(1)+","+(cy+R*pv/100*Math.sin(an)).toFixed(1));
+  var lx=cx+(R+24)*Math.cos(an),ly=cy+(R+24)*Math.sin(an);
+  labs+='<text x="'+lx.toFixed(1)+'" y="'+(ly+4).toFixed(1)+'" font-size="13" font-weight="700" text-anchor="middle">'+k+" "+(p[k]==null?"-":p[k]+"%")+'</text>'});
+ $("radar").innerHTML='<svg viewBox="0 0 340 300" width="100%" role="img" aria-label="radar">'+rings+axes+'<polygon points="'+pts.join(" ")+'" fill="rgba(124,140,255,.35)" stroke="#7c8cff" stroke-width="2"/>'+labs+'</svg>';
+ var h="";
+ DOM.forEach(function(d){
+  if(p[d]==null){h+='<div class="dom"><div class="dh"><b>'+t(DN[d])+'</b></div><p>'+t(UI.nodata)+'</p></div>';return}
+  var L=lv(p[d]);
+  h+='<div class="dom"><div class="dh"><b>'+t(DN[d])+'<span class="chip">'+t(UI[L])+'</span></b><span class="p">'+p[d]+'%</span></div><div class="bar" style="margin:8px 0"><i style="width:'+p[d]+'%"></i></div><p style="margin:4px 0;color:var(--tx)">'+t(DT[d][L])+'</p>';
+  for(var fi=0;fi<30;fi++){if(F[fi][0]!==d)continue;var v=res.f[fi];
+   if(v==null){h+='<div class="fac"><div class="fh"><span>'+t({en:F[fi][1],ar:F[fi][2]})+'</span></div><div class="ft">'+t(UI.nodata)+'</div></div>';continue}
+   h+='<div class="fac"><div class="fh"><span>'+t({en:F[fi][1],ar:F[fi][2]})+'<span class="chip">'+t(UI[lv(v)])+'</span>'+(res.fc[fi]<2?'<span class="chip">'+t(UI.few)+'</span>':'')+'</span><span>'+v+'%</span></div><div class="bar s"><i style="width:'+v+'%"></i></div><div class="ft">'+pole(fi,v)+'</div></div>'}
+  h+='</div>'});
+ $("doms").innerHTML=h;
+ var idx=[];for(var i=0;i<30;i++)if(res.f[i]!=null&&res.fc[i]>=2)idx.push(i);
+ if(!idx.length)for(var i2=0;i2<30;i2++)if(res.f[i2]!=null)idx.push(i2);
+ idx.sort(function(x,y){return Math.abs(res.f[y]-50)-Math.abs(res.f[x]-50)});
+ $("stand").innerHTML="<ul>"+idx.slice(0,5).map(function(fi){var v=res.f[fi];return"<li><b style='color:var(--tx)'>"+t({en:F[fi][1],ar:F[fi][2]})+" ("+v+"%)</b>: "+pole(fi,v)+"</li>"}).join("")+"</ul>";
+ var cm=COMBO.filter(function(c){return c[0](pp0)});
+ $("combos").innerHTML=cm.length?"<ul>"+cm.map(function(c){return"<li>"+(lang==="ar"?c[2]:c[1])+"</li>"}).join("")+"</ul>":"<p>"+t(UI.none)+"</p>";
+ var bad=res.sd>1.2||res.line||res.acq,mid=res.sd>1.0;
+ $("qual").textContent=bad?t(UI.qbad):mid?t(UI.qmid):t(UI.qok);
+ $("qual").className=bad?"warn":"";
+}
+$("share").onclick=function(){
+ var p=res.p,a=arch(pl(p));
+ var tx=(lang==="ar"?"نتيجتي في اختبار Big Five: "+a[2]+"\nالانفتاح "+(p.O==null?"-":p.O)+"% | الضمير "+(p.C==null?"-":p.C)+"% | الانبساط "+(p.E==null?"-":p.E)+"% | المقبولية "+(p.A==null?"-":p.A)+"% | العصابية "+(p.N==null?"-":p.N)+"%\nجرّبه: ":"My Big Five result: "+a[1]+"\nO "+(p.O==null?"-":p.O)+"% | C "+(p.C==null?"-":p.C)+"% | E "+(p.E==null?"-":p.E)+"% | A "+(p.A==null?"-":p.A)+"% | N "+(p.N==null?"-":p.N)+"%\nTry it: ")+location.href.split("#")[0].split("?")[0];
+ if(navigator.share){navigator.share({title:"Big Five",text:tx}).catch(function(){})}
+ else{
+  var ok=function(){$("msg").textContent=t(UI.copied)};
+  try{navigator.clipboard.writeText(tx).then(ok,fb)}catch(e){fb()}
+  function fb(){var x=document.createElement("textarea");x.value=tx;document.body.appendChild(x);x.select();try{document.execCommand("copy");ok()}catch(e){$("msg").textContent=tx}document.body.removeChild(x)}
+ }
+};
+if(/[?&]lang=ar/.test(location.search))lang="ar";
+var sv=load();if(sv){var c=0;for(var k in sv)c++;if(c>0){ans=sv;$("resume").classList.remove("hide")}}
+applyLang();
+})();
+</script>
+</body>
+</html>
